@@ -14,6 +14,7 @@ export class SharedService {
     delete_subject: boolean;
     edit_subject: boolean;
     add_subject: boolean;
+    add_question: boolean;
 
     private updateSubjects = new Subject<boolean>();
     private updateView = new Subject<boolean>();
@@ -29,6 +30,7 @@ export class SharedService {
         this.delete_subject = false;
         this.edit_subject = false;
         this.add_subject = false;
+        this.add_question = false;
     }
 
     setSelectedItem(id) {
@@ -37,6 +39,11 @@ export class SharedService {
 
     setAddSubjectPopup(val) {
         this.add_subject = val;
+        this.updateView.next(true);
+    }
+
+    setAddQuestionPopup(val) {
+        this.add_question = val;
         this.updateView.next(true);
     }
 
@@ -69,6 +76,13 @@ export class SharedService {
 
     addSubject(name) {
         this.http.post('https://studyhelper.cameronmcguffie.com/api/addsubject.php', { name: name }).subscribe({
+            next: data => this.doUpdateSubjects(),
+            error: error => { }
+        });
+    }
+
+    addQuestion(name) {
+        this.http.post('https://studyhelper.cameronmcguffie.com/api/addquestion.php', { name: name }).subscribe({
             next: data => this.doUpdateSubjects(),
             error: error => { }
         });

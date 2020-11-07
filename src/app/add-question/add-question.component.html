@@ -1,0 +1,24 @@
+<div class="popup">
+    <div class="popup_background"></div>
+    <div class="popup_window">
+        <div class="popup_header">
+            <div class="popup_text">Add a Question</div>
+            <div class="popup_close"><i class="fas fa-times" (click)="hideAddQuestion()"></i></div>
+        </div>
+        <div class="popup_content">
+            <div class="popup_form">
+                <div class="popup_form_header">
+                    Question Name
+                </div>
+                <div class="popup_form_data">
+                    <input type="text" name="question_name" [(ngModel)]="question_name" />
+                </div>
+            </div>
+            <div class="popup_options">
+                <div class="button" (click)="doAddQuestion()">
+                    Save
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

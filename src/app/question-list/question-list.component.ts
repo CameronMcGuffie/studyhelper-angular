@@ -35,4 +35,8 @@ export class QuestionListComponent {
             });
         });
     }
+
+    public showAddQuestion() {
+        this.sharedService.setAddQuestionPopup(true);
+    }
 }
