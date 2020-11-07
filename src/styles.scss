@@ -1,0 +1,172 @@
+html, body { height: 100% }
+
+body {
+    font-family: calibri;
+    width: 100%;
+    height: 100%;
+    padding: 0;
+    margin: 0;
+}
+
+.container {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    height: 100%;
+}
+
+.top {
+    background-color: #101B23;
+    color: #FFFFFF;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    height: 4em;
+}
+
+.banner {
+    width: 60%;
+    height: 4em;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.spacer {
+    flex-grow: 1;
+}
+
+.logo {
+    flex-grow: 1;
+    font-size: 2em;
+}
+
+.nav {
+    flex-grow: 1;
+}
+
+.nav_items {
+    display: flex;
+    justify-content: flex-end;
+}
+
+.nav_item {
+    margin-right: 0.5em;
+}
+
+.nav_item a {
+    color: #FFFFFF;
+    text-decoration: none;
+}
+
+.nav_item a:hover {
+    color: #999999;
+    text-decoration: none;
+}
+
+.body {
+    display: flex;
+    justify-content: center;
+    background-color: #FFFFFF;
+    color: #101B23;
+    flex-grow: 1;
+}
+
+.content {
+    width: 60%;
+    height: 100%;
+    padding-top: 2em;
+}
+
+.footer {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #101B23;
+    color: #FFFFFF;
+    height: 4em;
+}
+
+.footer_content a {
+    color: #FFFFFF;
+    text-decoration: none;
+}
+
+.footer_content a:hover {
+    text-decoration: underline;
+}
+
+.object {
+    background-color: #F6F6F6 ;
+    border: 1px solid #EBEBEB;
+    border-radius: 0.5em;
+    padding: 0.5em;
+    display: flex;
+    justify-content: space-between;
+    font-size: 1.2em;
+}
+
+.object_spacer {
+    height: 0.5em;
+}
+
+.object_footer i {
+    padding-right: 0.5em;
+}
+
+.object_footer i:hover {
+    text-decoration: none;
+    cursor: pointer;
+    color: #777777;
+}
+
+.object_bottom {
+    display: flex;
+    justify-content: flex-end;
+    padding-top: 0.5em;
+    padding-right: 0.5em;
+    font-size: 1.5em;
+}
+
+.object_add:hover {
+    cursor: pointer;
+    color: #777777;
+}
+
+.button {
+    border: 3px solid #101B23;
+    border-radius: 0.5em;
+    padding: 0.1em;
+    min-width: 2em;
+    font-size: 2em;
+    text-align: center;
+    background: linear-gradient(180deg, rgba(8, 39, 61, 1) 0%, rgba(31, 59, 80, 1) 100%);
+    color: #FFFFFF;
+}
+
+.button:hover {
+    background: linear-gradient(180deg, rgba(7, 69, 112, 1) 0%, rgba(45, 100, 140, 1) 100%);
+    cursor: pointer;
+}
+
+h1 {
+    margin: 0px;
+    padding: 0px;
+}
+
+h2 {
+    margin: 0px;
+    padding: 0px;
+}
+
+h3 {
+    margin: 0px;
+    padding: 0px;
+}
+
+h4 {
+    margin: 0px;
+    padding: 0px;
+}

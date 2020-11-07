@@ -1,0 +1,61 @@
+import { Component, EventEmitter, Output } from '@angular/core';
+import { Router } from '@angular/router';
+import { HttpClient } from '@angular/common/http';
+import { SharedService } from '../shared.service';
+
+@Component({
+    selector: 'subject-list',
+    templateUrl: './subject-list.component.html',
+    styleUrls: ['./subject-list.component.scss']
+})
+
+export class SubjectListComponent {
+    constructor(
+        private router: Router,
+        private http: HttpClient,
+        private sharedService: SharedService
+    ) {
+        sharedService.updateSubjects$.subscribe(
+            update => {
+                if (update == true) {
+                    this.get_subjects();
+                }
+            });
+    }
+
+    public subjects;
+
+    @Output() item_id: EventEmitter<number> = new EventEmitter<number>();
+
+    @Output() delete_subject: EventEmitter<boolean> = new EventEmitter<boolean>();
+    @Output() edit_subject: EventEmitter<boolean> = new EventEmitter<boolean>();
+    @Output() add_subject: EventEmitter<boolean> = new EventEmitter<boolean>();
+
+    ngOnInit() {
+        this.get_subjects();
+    }
+
+    public get_subjects() {
+        this.http.get<any>('http://studyhelper.cameronmcguffie.com/api/subjects.php').subscribe(data => {
+            this.subjects = data.subjects;
+        });
+    }
+
+    public showDelete(id) {
+        this.sharedService.setSelectedItem(id);
+        this.sharedService.setDeleteSubjectPopup(true);
+    }
+
+    public showEditSubject(id) {
+        this.sharedService.setSelectedItem(id);
+        this.sharedService.setEditSubjectPopup(true);
+    }
+
+    public showAddSubject() {
+        this.sharedService.setAddSubjectPopup(true);
+    }
+
+    goToQuestions(id) {
+        this.router.navigate(['/questions', id]);
+    }
+}

@@ -1,0 +1,19 @@
+<div class="object_top">
+  <div class="object_title">
+    Subjects
+  </div>
+  <div class="object_add">
+    <i class="fas fa-plus" (click)="showAddSubject()"></i>
+  </div>
+</div>
+<div *ngFor="let subject of subjects">
+  <div class="object">
+    <div class="object_header" (click)="goToQuestions(subject.id)">
+      {{subject.name}}
+    </div>
+    <div class="object_footer">
+      <i class="fas fa-edit" (click)="showEditSubject(subject.id)"></i> <i class="fas fa-trash" (click)="showDelete(subject.id)"></i>
+    </div>
+  </div>
+  <div class="object_spacer"></div>
+</div>

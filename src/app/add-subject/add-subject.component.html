@@ -1,0 +1,24 @@
+<div class="popup">
+    <div class="popup_background"></div>
+    <div class="popup_window">
+        <div class="popup_header">
+            <div class="popup_text">Add a Subject</div>
+            <div class="popup_close"><i class="fas fa-times" (click)="hideAddSubject()"></i></div>
+        </div>
+        <div class="popup_content">
+            <div class="popup_form">
+                <div class="popup_form_header">
+                    Subject Name
+                </div>
+                <div class="popup_form_data">
+                    <input type="text" name="subject_name" [(ngModel)]="subject_name" />
+                </div>
+            </div>
+            <div class="popup_options">
+                <div class="button" (click)="doAddSubject()">
+                    Save
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

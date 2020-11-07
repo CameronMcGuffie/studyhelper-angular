@@ -1,0 +1,35 @@
+<delete-subject *ngIf="this.delete_subject"></delete-subject>
+<edit-subject *ngIf="this.edit_subject"></edit-subject>
+<add-subject *ngIf="this.add_subject"></add-subject>
+  <div class="container">
+    <div class="top">
+      <div class="banner">
+        <div class="logo">
+          Study Helper
+        </div>
+        <div class="nav">
+          <div class="nav_items">
+            <div class="nav_item">
+              Home
+            </div>
+            <div class="nav_item">
+              <a routerLink="/subjects" routerLinkActive="active">Subjects</a>
+            </div>
+            <div class="nav_item">
+              Logout
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="body">
+      <div class="content">
+        <router-outlet></router-outlet>
+      </div>
+    </div>
+    <div class="footer">
+      <div class="footer_content">
+        &copy; 2020 <a href="https://www.cameronmcguffie.com" target="_blank">Cameron McGuffie</a>
+      </div>
+    </div>
+  </div>

@@ -1,0 +1,20 @@
+<div class="popup">
+    <div class="popup_background"></div>
+    <div class="popup_window">
+        <div class="popup_header">
+            <div class="popup_text">Delete Question</div>
+            <div class="popup_close"><i class="fas fa-times" (click)="hideDelete()"></i></div>
+        </div>
+        <div class="popup_content">
+            <div class="popup_text">Are you sure?</div>
+            <div class="popup_options">
+                <div class="button" (click)="doDelete()">
+                    Yes
+                </div>
+                <div class="button" (click)="hideDelete()">
+                    No
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
