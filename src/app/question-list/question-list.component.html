@@ -1,25 +1,19 @@
 <div class="object_top">
   <div class="object_title">
-    Questions for subject
+    Questions for {{subject_name}}
   </div>
   <div class="object_add">
     <i class="fas fa-plus" (click)="showAddQuestion()"></i>
   </div>
 </div>
-<div class="object">
-  <div class="object_header">
-    Sample Question
+<div *ngFor="let question of questions">
+  <div class="object">
+    <div class="object_header">
+      {{question.question}}
+    </div>
+    <div class="object_footer">
+      <i class="fas fa-edit"></i> <i class="fas fa-trash"></i>
+    </div>
   </div>
-  <div class="object_footer">
-    <i class="fas fa-edit"></i> <i class="fas fa-trash" (click)="showDelete(0)"></i>
-  </div>
-</div>
-<div class="object_spacer"></div>
-<div class="object">
-  <div class="object_header">
-    Sample Question
-  </div>
-  <div class="object_footer">
-    <i class="fas fa-edit"></i> <i class="fas fa-trash" (click)="showDelete(0)"></i>
-  </div>
+  <div class="object_spacer"></div>
 </div>

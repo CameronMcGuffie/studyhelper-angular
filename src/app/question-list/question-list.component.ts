@@ -1,5 +1,6 @@
 import { Component, EventEmitter, Output } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
+import { SharedService } from '../shared.service';
 
 @Component({
     selector: 'question-list',
@@ -8,23 +9,30 @@ import { ActivatedRoute } from '@angular/router';
 })
 
 export class QuestionListComponent {
+    constructor(
+        private route: ActivatedRoute,
+        private sharedService: SharedService
+    ) {
+        sharedService.questionList$.subscribe(
+            data => {
+                this.questions = data
+            });
+    }
+
     id: number;
+    questions: any;
+    subject_name: string;
     private sub: any;
-
-    @Output() delete_question: EventEmitter<boolean> = new EventEmitter<boolean>();
-    @Output() item_id: EventEmitter<number> = new EventEmitter<number>();
-
-    constructor(private route: ActivatedRoute) { }
 
     ngOnInit() {
         this.sub = this.route.params.subscribe(params => {
             this.id = +params['id']; 
             console.log("Load questions for " + this.id);
-        });
-    }
 
-    public showDelete(id) {
-        this.item_id.emit(id);
-        this.delete_question.emit(true);
+            this.sharedService.getQuestions(this.id);
+            this.sharedService.getSubjectName(this.id).subscribe(data => {
+                this.subject_name = data.subject.name;
+            });
+        });
     }
 }
