@@ -26,8 +26,7 @@ export class QuestionListComponent {
 
     ngOnInit() {
         this.sub = this.route.params.subscribe(params => {
-            this.id = +params['id']; 
-            console.log("Load questions for " + this.id);
+            this.id = +params['id'];
 
             this.sharedService.getQuestions(this.id);
             this.sharedService.getSubjectName(this.id).subscribe(data => {
@@ -38,5 +37,15 @@ export class QuestionListComponent {
 
     public showAddQuestion() {
         this.sharedService.setAddQuestionPopup(true);
+    }
+
+    public showDeleteQuestion(id) {
+        this.sharedService.setSelectedItem(id);
+        this.sharedService.setDeleteQuestionPopup(true);
+    }
+
+    public showEditQuestion(id) {
+        this.sharedService.setSelectedItem(id);
+        this.sharedService.setEditQuestionPopup(true);
     }
 }

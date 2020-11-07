@@ -12,7 +12,7 @@
       {{question.question}}
     </div>
     <div class="object_footer">
-      <i class="fas fa-edit"></i> <i class="fas fa-trash"></i>
+      <i class="fas fa-edit" (click)="showEditQuestion(question.id)"></i> <i class="fas fa-trash" (click)="showDeleteQuestion(question.id)"></i>
     </div>
   </div>
   <div class="object_spacer"></div>

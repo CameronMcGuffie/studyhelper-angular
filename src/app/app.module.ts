@@ -11,13 +11,17 @@ import { DeleteSubjectComponent } from './delete-subject/delete-subject.componen
 import { EditSubjectComponent } from './edit-subject/edit-subject.component';
 import { AddSubjectComponent } from './add-subject/add-subject.component';
 import { AddQuestionComponent } from './add-question/add-question.component';
+import { EditQuestionComponent } from './edit-question/edit-question.component';
+import { DeleteQuestionComponent } from './delete-question/delete-question.component';
 
 const APP_COMPONENTS: any[] = [
   AppComponent,
   DeleteSubjectComponent,
   EditSubjectComponent,
   AddSubjectComponent,
-  AddQuestionComponent
+  AddQuestionComponent,
+  EditQuestionComponent,
+  DeleteQuestionComponent
 ];
 
 @NgModule({

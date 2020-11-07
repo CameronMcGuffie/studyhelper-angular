@@ -15,12 +15,16 @@ export class SharedService {
     edit_subject: boolean;
     add_subject: boolean;
     add_question: boolean;
+    delete_question: boolean;
+    edit_question: boolean;
 
     private updateSubjects = new Subject<boolean>();
+    private updateQuestions = new Subject<boolean>();
     private updateView = new Subject<boolean>();
     private questionList = new Subject<any>();
 
     updateSubjects$ = this.updateSubjects.asObservable();
+    updateQuestions$ = this.updateQuestions.asObservable();
     updateView$ = this.updateView.asObservable();
     questionList$ = this.questionList.asObservable();
 
@@ -31,6 +35,8 @@ export class SharedService {
         this.edit_subject = false;
         this.add_subject = false;
         this.add_question = false;
+        this.delete_question = false;
+        this.edit_question = false;
     }
 
     setSelectedItem(id) {
@@ -52,13 +58,27 @@ export class SharedService {
         this.updateView.next(true);
     }
 
+    setDeleteQuestionPopup(val) {
+        this.delete_question = val;
+        this.updateView.next(true);
+    }
+
     setEditSubjectPopup(val) {
         this.edit_subject = val;
         this.updateView.next(true);
     }
 
+    setEditQuestionPopup(val) {
+        this.edit_question = val;
+        this.updateView.next(true);
+    }
+
     doUpdateSubjects() {
         this.updateSubjects.next(true);
+    }
+
+    doUpdateQuestions() {
+        this.updateQuestions.next(true);
     }
 
     getQuestions(subject) {
@@ -95,9 +115,23 @@ export class SharedService {
         });
     }
 
+    editQuestion(id, name) {
+        this.http.post('https://studyhelper.cameronmcguffie.com/api/editquestion.php', { id: id, name: name }).subscribe({
+            next: data => this.doUpdateSubjects(),
+            error: error => { }
+        });
+    }
+
     deleteSubject(id) {
         this.http.post('https://studyhelper.cameronmcguffie.com/api/delsubject.php', { id: id }).subscribe({
-            next: data => this.doUpdateSubjects(),
+            next: data => this.doUpdateQuestions(),
+            error: error => { }
+        });
+    }
+
+    deleteQuestion(id) {
+        this.http.post('https://studyhelper.cameronmcguffie.com/api/delquestion.php', { id: id }).subscribe({
+            next: data => this.doUpdateQuestions(),
             error: error => { }
         });
     }
