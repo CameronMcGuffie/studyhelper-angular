@@ -13,7 +13,7 @@ export class DeleteSubjectComponent {
     ) { }
 
     public doDelete() {
-        this.sharedService.deleteSubject(this.sharedService.item_id);
+        this.sharedService.deleteSubject(this.sharedService.subject_id);
         this.sharedService.setDeleteSubjectPopup(false);
     }
 

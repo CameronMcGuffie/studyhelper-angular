@@ -42,12 +42,12 @@ export class SubjectListComponent {
     }
 
     public showDelete(id) {
-        this.sharedService.setSelectedItem(id);
+        this.sharedService.setSelectedSubject(id);
         this.sharedService.setDeleteSubjectPopup(true);
     }
 
     public showEditSubject(id) {
-        this.sharedService.setSelectedItem(id);
+        this.sharedService.setSelectedSubject(id);
         this.sharedService.setEditSubjectPopup(true);
     }
 

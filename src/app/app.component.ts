@@ -21,16 +21,19 @@ export class AppComponent {
 
   title = 'studyhelper';
 
-  public item_id;
+  public subject_id;
   public delete_subject;
   public edit_subject;
   public add_subject;
+  
+  public question_id;
   public add_question;
   public delete_question;
   public edit_question;
 
   public ngOnInit() {
-    this.item_id = 0;
+    this.subject_id = 0;
+    this.question_id = 0;
 
     this.delete_subject = false;
     this.edit_subject = false;
@@ -41,7 +44,8 @@ export class AppComponent {
   }
 
   updateView() {
-    this.item_id = this.sharedService.item_id;
+    this.subject_id = this.sharedService.subject_id;
+    this.question_id = this.sharedService.subject_id;
 
     this.delete_subject = this.sharedService.delete_subject;
     this.edit_subject = this.sharedService.edit_subject;

@@ -13,7 +13,7 @@ export class DeleteQuestionComponent {
     ) { }
 
     public doDelete() {
-        this.sharedService.deleteQuestion(this.sharedService.item_id);
+        this.sharedService.deleteQuestion();
         this.sharedService.setDeleteQuestionPopup(false);
     }
 

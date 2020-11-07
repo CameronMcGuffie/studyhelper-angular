@@ -21,7 +21,7 @@ export class EditQuestionComponent {
     }
 
     public doEdit() {
-        this.sharedService.editQuestion(this.sharedService.item_id, this.question_name);
+        this.sharedService.editQuestion(this.sharedService.subject_id, this.question_name);
         this.sharedService.setEditQuestionPopup(false);
     }
 

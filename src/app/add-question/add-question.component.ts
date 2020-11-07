@@ -12,14 +12,15 @@ export class AddQuestionComponent {
         private sharedService: SharedService
     ) { }
 
-    question_name: string;
+    question: string;
+    answer: string;
 
     ngOnInit() {
 
     }
 
     public doAddQuestion() {
-        this.sharedService.addQuestion(this.question_name);
+        this.sharedService.addQuestion(this.question, this.answer);
         this.sharedService.setAddQuestionPopup(false);
     }
 

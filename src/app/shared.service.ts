@@ -10,7 +10,10 @@ export class SharedService {
 
     }
 
-    item_id: number;
+    serviceURL: string = "https://studyhelper.cameronmcguffie.com/api";
+
+    subject_id: number;
+    question_id: number;
     delete_subject: boolean;
     edit_subject: boolean;
     add_subject: boolean;
@@ -29,7 +32,8 @@ export class SharedService {
     questionList$ = this.questionList.asObservable();
 
     public ngOnInit() {
-        this.item_id = 0;
+        this.subject_id = 0;
+        this.question_id = 0;
 
         this.delete_subject = false;
         this.edit_subject = false;
@@ -39,8 +43,12 @@ export class SharedService {
         this.edit_question = false;
     }
 
-    setSelectedItem(id) {
-        this.item_id = id;
+    setSelectedSubject(id) {
+        this.subject_id = id;
+    }
+
+    setSelectedQuestion(id) {
+        this.question_id = id;
     }
 
     setAddSubjectPopup(val) {
@@ -81,10 +89,10 @@ export class SharedService {
         this.updateQuestions.next(true);
     }
 
-    getQuestions(subject) {
-        this.http.get<any>('https://studyhelper.cameronmcguffie.com/api/questions.php?subject=' + subject).subscribe({
+    getQuestions(subject_id) {
+        this.http.post(`${this.serviceURL}/api.php`, { "func": "questions", "subject_id": subject_id }).subscribe({
             next: data => {
-                this.questionList.next(data.questions);
+                this.questionList.next(data);
             },
             error: error => { }
         });
@@ -101,9 +109,9 @@ export class SharedService {
         });
     }
 
-    addQuestion(name) {
-        this.http.post('https://studyhelper.cameronmcguffie.com/api/addquestion.php', { name: name }).subscribe({
-            next: data => this.doUpdateSubjects(),
+    addQuestion(question, answer) {
+        this.http.post(`${this.serviceURL}/api.php`, { "func": "add_question", "subject_id": this.subject_id, "question": question, "answer": answer }).subscribe({
+            next: data => this.getQuestions(this.subject_id),
             error: error => { }
         });
     }
@@ -124,14 +132,14 @@ export class SharedService {
 
     deleteSubject(id) {
         this.http.post('https://studyhelper.cameronmcguffie.com/api/delsubject.php', { id: id }).subscribe({
-            next: data => this.doUpdateQuestions(),
+            next: data => this.doUpdateSubjects(),
             error: error => { }
         });
     }
 
-    deleteQuestion(id) {
-        this.http.post('https://studyhelper.cameronmcguffie.com/api/delquestion.php', { id: id }).subscribe({
-            next: data => this.doUpdateQuestions(),
+    deleteQuestion() {
+        this.http.post(`${this.serviceURL}/api.php`, { "func": "delete_question", "question_id": this.question_id }).subscribe({
+            next: data => this.getQuestions(this.subject_id),
             error: error => { }
         });
     }

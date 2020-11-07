@@ -15,7 +15,7 @@ export class QuestionListComponent {
     ) {
         sharedService.questionList$.subscribe(
             data => {
-                this.questions = data
+                this.questions = data.questions
             });
     }
 
@@ -28,6 +28,7 @@ export class QuestionListComponent {
         this.sub = this.route.params.subscribe(params => {
             this.id = +params['id'];
 
+            this.sharedService.subject_id = this.id;
             this.sharedService.getQuestions(this.id);
             this.sharedService.getSubjectName(this.id).subscribe(data => {
                 this.subject_name = data.subject.name;
@@ -40,12 +41,12 @@ export class QuestionListComponent {
     }
 
     public showDeleteQuestion(id) {
-        this.sharedService.setSelectedItem(id);
+        this.sharedService.setSelectedQuestion(id);
         this.sharedService.setDeleteQuestionPopup(true);
     }
 
     public showEditQuestion(id) {
-        this.sharedService.setSelectedItem(id);
+        this.sharedService.setSelectedQuestion(id);
         this.sharedService.setEditQuestionPopup(true);
     }
 }
