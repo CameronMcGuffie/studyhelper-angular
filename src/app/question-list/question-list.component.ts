@@ -47,6 +47,7 @@ export class QuestionListComponent {
 
     public showEditQuestion(id) {
         this.sharedService.setSelectedQuestion(id);
+        this.sharedService.getQuestion(id);
         this.sharedService.setEditQuestionPopup(true);
     }
 }

@@ -25,19 +25,21 @@ export class SharedService {
     private updateQuestions = new Subject<boolean>();
     private updateView = new Subject<boolean>();
     private questionList = new Subject<any>();
+    private questionData = new Subject<any>();
 
     updateSubjects$ = this.updateSubjects.asObservable();
     updateQuestions$ = this.updateQuestions.asObservable();
     updateView$ = this.updateView.asObservable();
     questionList$ = this.questionList.asObservable();
+    questionData$ = this.questionData.asObservable();
 
     public ngOnInit() {
         this.subject_id = 0;
-        this.question_id = 0;
-
         this.delete_subject = false;
         this.edit_subject = false;
         this.add_subject = false;
+
+        this.question_id = 0;
         this.add_question = false;
         this.delete_question = false;
         this.edit_question = false;
@@ -123,9 +125,9 @@ export class SharedService {
         });
     }
 
-    editQuestion(id, name) {
-        this.http.post('https://studyhelper.cameronmcguffie.com/api/editquestion.php', { id: id, name: name }).subscribe({
-            next: data => this.doUpdateSubjects(),
+    editQuestion(question_id, question, answer) {
+        this.http.post(`${this.serviceURL}/api.php`, { "func": "edit_question", "question_id": question_id, "question": question, "answer": answer }).subscribe({
+            next: data => this.getQuestions(this.subject_id),
             error: error => { }
         });
     }
@@ -141,6 +143,16 @@ export class SharedService {
         this.http.post(`${this.serviceURL}/api.php`, { "func": "delete_question", "question_id": this.question_id }).subscribe({
             next: data => this.getQuestions(this.subject_id),
             error: error => { }
+        });
+    }
+
+    getQuestion(question_id) {
+        console.log("Get question " + question_id);
+        this.http.post(`${this.serviceURL}/api.php`, { "func": "get_question", "question_id": question_id }).subscribe({
+            next: data => { 
+                this.questionData.next(data);
+            },
+            error: error => {  }
         });
     }
 }

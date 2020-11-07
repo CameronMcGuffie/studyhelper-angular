@@ -8,10 +8,18 @@
         <div class="popup_content">
             <div class="popup_form">
                 <div class="popup_form_header">
-                    Question Name
+                    Question
                 </div>
                 <div class="popup_form_data">
-                    <input type="text" name="question_name" [(ngModel)]="question_name" />
+                    <input type="text" name="question" [(ngModel)]="question" />
+                </div>
+            </div>
+            <div class="popup_form">
+                <div class="popup_form_header">
+                    Answer
+                </div>
+                <div class="popup_form_data">
+                    <textarea [(ngModel)]="answer"></textarea>
                 </div>
             </div>
             <div class="popup_options">

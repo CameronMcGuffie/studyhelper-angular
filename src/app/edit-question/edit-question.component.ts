@@ -9,19 +9,24 @@ import { SharedService } from '../shared.service';
 
 export class EditQuestionComponent {
     constructor(
-      private sharedService: SharedService
-    ) { }
+        private sharedService: SharedService
+    ) {
+        sharedService.questionData$.subscribe(
+            data => {
+                this.question = data.question.question;
+                this.answer = data.question.answer;
+            });
+    }
 
-    question_name: string;
+    question: string;
+    answer: any;
 
     ngOnInit() {
-        // this.sharedService.getSubjectName(this.sharedService.item_id).subscribe(data => {
-        //     this.subject_name = data.subject.name;
-        // });
+        
     }
 
     public doEdit() {
-        this.sharedService.editQuestion(this.sharedService.subject_id, this.question_name);
+        this.sharedService.editQuestion(this.sharedService.question_id, this.question, this.answer);
         this.sharedService.setEditQuestionPopup(false);
     }
 
