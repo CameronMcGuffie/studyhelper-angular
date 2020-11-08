@@ -92,11 +92,8 @@ export class SharedService {
     }
 
     getQuestions(subject_id) {
-        this.http.post(`${this.serviceURL}/api.php`, { "func": "questions", "subject_id": subject_id }).subscribe({
-            next: data => {
-                this.questionList.next(data);
-            },
-            error: error => { }
+        this.http.get(`${this.serviceURL}/api.php?func=questions&subject_id=${subject_id}`).subscribe(data => {
+            this.questionList.next(data);
         });
     }
 
@@ -147,12 +144,8 @@ export class SharedService {
     }
 
     getQuestion(question_id) {
-        console.log("Get question " + question_id);
-        this.http.post(`${this.serviceURL}/api.php`, { "func": "get_question", "question_id": question_id }).subscribe({
-            next: data => { 
-                this.questionData.next(data);
-            },
-            error: error => {  }
+        this.http.get(`${this.serviceURL}/api.php?func=get_question&question_id=${question_id}`).subscribe(data => {
+            this.questionData.next(data);
         });
     }
 }
