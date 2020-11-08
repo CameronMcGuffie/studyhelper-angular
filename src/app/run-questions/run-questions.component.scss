@@ -10,6 +10,7 @@
 
 .popup_window {
     margin: 1em;
+    width: 80%;
 }
 
 .popup_background {
@@ -69,7 +70,10 @@
 
 .formatted_text {
     white-space: pre-line;
-    width: 40em;
+    width: 100%;
+    max-height: 10em;
+    overflow: auto;
+    padding-top: 0.5em;
 }
 
 .popup_form_data input[type=text] {
@@ -81,7 +85,7 @@
     -webkit-appearance: none;
     font-size: 16pt;
     height: 2em;
-    width: 30em;
+    width: 100%;
 }
 
 .popup_form_data textarea {
@@ -93,7 +97,7 @@
     -webkit-appearance: none;
     font-size: 16pt;
     height: 9em;
-    width: 30em;
+    width: 60vw;
 }
 
 .popup_options {
