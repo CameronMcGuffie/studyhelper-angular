@@ -30,9 +30,13 @@ export class RunQuestionsComponent {
     question_count: number;
     show_answer: boolean;
     answer_button: string;
+    right_answer: number;
+    wrong_answer: number;
 
     ngOnInit() {
         this.question_id = 0;
+        this.right_answer = 0;
+        this.wrong_answer = 0;
         this.show_answer = false;
         this.updateAnswerButton();
 
@@ -78,5 +82,13 @@ export class RunQuestionsComponent {
 
     public hideEditQuestion() {
         this.sharedService.setRunQuestionsPopup(false);
+    }
+
+    public answerResult(result) {
+        if(result) {
+            this.right_answer++;
+        } else {
+            this.wrong_answer++;
+        }
     }
 }

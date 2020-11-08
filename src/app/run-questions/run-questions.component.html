@@ -2,7 +2,7 @@
     <div class="popup_background"></div>
     <div class="popup_window">
         <div class="popup_header">
-            <div class="popup_text">Run Question {{this.question_id + 1}} / {{this.question_count + 1}}</div>
+            <div class="popup_text">Question {{this.question_id + 1}} / {{this.question_count + 1}} | Results {{this.right_answer}} / {{this.wrong_answer}}</div>
             <div class="popup_close"><i class="fas fa-times" (click)="hideEditQuestion()"></i></div>
         </div>
         <div class="popup_content">
@@ -11,7 +11,7 @@
                     Question
                 </div>
                 <div class="popup_form_data">
-                    <input type="text" name="question" [(ngModel)]="question" />
+                    <div class="formatted_text">{{this.question}}</div>
                 </div>
             </div>
             <div class="popup_form">
@@ -28,7 +28,15 @@
                 </div>
                 <div class="popup_form_data">
                     <br />
-                    <span style="white-space: pre-line">{{this.answer}}</span>
+                    <span class="formatted_text">{{this.answer}}</span>
+                </div>
+            </div>
+            <div class="popup_options" *ngIf="this.show_answer">
+                <div class="button" (click)="answerResult(true)">
+                    Correct
+                </div>
+                <div class="button" (click)="answerResult(false)">
+                    Wrong
                 </div>
             </div>
             <div class="popup_options">

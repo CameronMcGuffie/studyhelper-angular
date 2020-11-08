@@ -8,6 +8,10 @@
     align-items: center;
 }
 
+.popup_window {
+    margin: 1em;
+}
+
 .popup_background {
     position: absolute;
     background-color: #333333;
@@ -61,6 +65,11 @@
     padding-right: 0.5em;
     font-size: 16pt;
     font-weight: bold;
+}
+
+.formatted_text {
+    white-space: pre-line;
+    width: 40em;
 }
 
 .popup_form_data input[type=text] {
