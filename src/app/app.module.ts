@@ -13,6 +13,7 @@ import { AddSubjectComponent } from './add-subject/add-subject.component';
 import { AddQuestionComponent } from './add-question/add-question.component';
 import { EditQuestionComponent } from './edit-question/edit-question.component';
 import { DeleteQuestionComponent } from './delete-question/delete-question.component';
+import { RunQuestionsComponent } from './run-questions/run-questions.component';
 
 const APP_COMPONENTS: any[] = [
   AppComponent,
@@ -21,7 +22,8 @@ const APP_COMPONENTS: any[] = [
   AddSubjectComponent,
   AddQuestionComponent,
   EditQuestionComponent,
-  DeleteQuestionComponent
+  DeleteQuestionComponent,
+  RunQuestionsComponent
 ];
 
 @NgModule({

@@ -4,35 +4,36 @@
 <add-question *ngIf="this.add_question"></add-question>
 <delete-question *ngIf="this.delete_question"></delete-question>
 <edit-question *ngIf="this.edit_question"></edit-question>
-  <div class="container">
-    <div class="top">
-      <div class="banner">
-        <div class="logo">
-          Study Helper
-        </div>
-        <div class="nav">
-          <div class="nav_items">
-            <div class="nav_item">
-              Home
-            </div>
-            <div class="nav_item">
-              <a routerLink="/subjects" routerLinkActive="active">Subjects</a>
-            </div>
-            <div class="nav_item">
-              Logout
-            </div>
+<run-questions *ngIf="this.run_questions"></run-questions>
+<div class="container">
+  <div class="top">
+    <div class="banner">
+      <div class="logo">
+        Study Helper
+      </div>
+      <div class="nav">
+        <div class="nav_items">
+          <div class="nav_item">
+            Home
+          </div>
+          <div class="nav_item">
+            <a routerLink="/subjects" routerLinkActive="active">Subjects</a>
+          </div>
+          <div class="nav_item">
+            Logout
           </div>
         </div>
       </div>
     </div>
-    <div class="body">
-      <div class="content">
-        <router-outlet></router-outlet>
-      </div>
-    </div>
-    <div class="footer">
-      <div class="footer_content">
-        &copy; 2020 <a href="https://www.cameronmcguffie.com" target="_blank">Cameron McGuffie</a>
-      </div>
+  </div>
+  <div class="body">
+    <div class="content">
+      <router-outlet></router-outlet>
     </div>
   </div>
+  <div class="footer">
+    <div class="footer_content">
+      &copy; 2020 <a href="https://www.cameronmcguffie.com" target="_blank">Cameron McGuffie</a>
+    </div>
+  </div>
+</div>

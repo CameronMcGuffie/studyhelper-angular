@@ -17,9 +17,11 @@ export class SharedService {
     delete_subject: boolean;
     edit_subject: boolean;
     add_subject: boolean;
+
     add_question: boolean;
     delete_question: boolean;
     edit_question: boolean;
+    run_questions: boolean;
 
     private updateSubjects = new Subject<boolean>();
     private updateQuestions = new Subject<boolean>();
@@ -43,6 +45,7 @@ export class SharedService {
         this.add_question = false;
         this.delete_question = false;
         this.edit_question = false;
+        this.run_questions = false;
     }
 
     setSelectedSubject(id) {
@@ -80,6 +83,11 @@ export class SharedService {
 
     setEditQuestionPopup(val) {
         this.edit_question = val;
+        this.updateView.next(true);
+    }
+
+    setRunQuestionsPopup(val) {
+        this.run_questions = val;
         this.updateView.next(true);
     }
 

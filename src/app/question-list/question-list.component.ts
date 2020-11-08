@@ -40,6 +40,10 @@ export class QuestionListComponent {
         this.sharedService.setAddQuestionPopup(true);
     }
 
+    public showRunQuestions() {
+        this.sharedService.setRunQuestionsPopup(true);
+    }
+
     public showDeleteQuestion(id) {
         this.sharedService.setSelectedQuestion(id);
         this.sharedService.setDeleteQuestionPopup(true);

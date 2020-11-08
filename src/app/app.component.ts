@@ -30,6 +30,7 @@ export class AppComponent {
   public add_question;
   public delete_question;
   public edit_question;
+  public run_questions;
 
   public ngOnInit() {
     this.subject_id = 0;
@@ -38,9 +39,11 @@ export class AppComponent {
     this.delete_subject = false;
     this.edit_subject = false;
     this.add_subject = false;
+
     this.add_question = false;
     this.delete_question = false;
     this.edit_question = false;
+    this.run_questions = false;
   }
 
   updateView() {
@@ -50,9 +53,11 @@ export class AppComponent {
     this.delete_subject = this.sharedService.delete_subject;
     this.edit_subject = this.sharedService.edit_subject;
     this.add_subject = this.sharedService.add_subject;
+
     this.add_question = this.sharedService.add_question;
     this.delete_question = this.sharedService.delete_question;
     this.edit_question = this.sharedService.edit_question;
+    this.run_questions = this.sharedService.run_questions;
   }
 
   doDelete(data) {
