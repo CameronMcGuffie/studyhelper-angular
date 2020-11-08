@@ -14,9 +14,11 @@ export class RunQuestionsComponent {
         sharedService.questionList$.subscribe(
             data => {
                 this.questions = data.questions;
-                this.question = this.questions[this.question_id].question;
-                this.answer = this.questions[this.question_id].answer;
-                this.question_count = (Object.keys(this.questions).length - 1)
+                if (this.questions) {
+                    this.question = this.questions[this.question_id].question;
+                    this.answer = this.questions[this.question_id].answer;
+                    this.question_count = (Object.keys(this.questions).length - 1);
+                }
             });
     }
 
@@ -43,7 +45,7 @@ export class RunQuestionsComponent {
     }
 
     public updateAnswerButton() {
-        if(this.show_answer) {
+        if (this.show_answer) {
             this.answer_button = "Hide Answer";
         } else {
             this.answer_button = "Show Answer";
@@ -66,7 +68,7 @@ export class RunQuestionsComponent {
         this.show_answer = false;
         this.your_answer = "";
         this.updateAnswerButton();
-        
+
         if (this.question_id < this.question_count) {
             this.question_id++;
             this.question = this.questions[this.question_id].question;
