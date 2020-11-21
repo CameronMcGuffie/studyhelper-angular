@@ -59,16 +59,4 @@ export class AppComponent {
     this.edit_question = this.sharedService.edit_question;
     this.run_questions = this.sharedService.run_questions;
   }
-
-  doDelete(data) {
-    if (data == true) {
-      this.sharedService.doUpdateSubjects();
-    }
-  }
-
-  doEditSubject(data) {
-    if (data == true) {
-      this.sharedService.doUpdateSubjects();
-    }
-  }
 }

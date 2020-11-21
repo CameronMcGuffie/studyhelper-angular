@@ -23,14 +23,14 @@ export class SharedService {
     edit_question: boolean;
     run_questions: boolean;
 
-    private updateSubjects = new Subject<boolean>();
-    private updateQuestions = new Subject<boolean>();
+    private subjectList = new Subject<any>();
+
     private updateView = new Subject<boolean>();
     private questionList = new Subject<any>();
     private questionData = new Subject<any>();
 
-    updateSubjects$ = this.updateSubjects.asObservable();
-    updateQuestions$ = this.updateQuestions.asObservable();
+    subjectList$ = this.subjectList.asObservable();
+
     updateView$ = this.updateView.asObservable();
     questionList$ = this.questionList.asObservable();
     questionData$ = this.questionData.asObservable();
@@ -91,12 +91,10 @@ export class SharedService {
         this.updateView.next(true);
     }
 
-    doUpdateSubjects() {
-        this.updateSubjects.next(true);
-    }
-
-    doUpdateQuestions() {
-        this.updateQuestions.next(true);
+    getSubjects() {
+        this.http.get(`${this.serviceURL}/api.php?func=subjects`).subscribe(data => {
+            this.subjectList.next(data);
+        });
     }
 
     getQuestions(subject_id) {
@@ -106,12 +104,12 @@ export class SharedService {
     }
 
     getSubjectName(id): any {
-        return this.http.get<any>('https://studyhelper.cameronmcguffie.com/api/subject.php?id=' + id);
+        return this.http.get<any>(`${this.serviceURL}/api.php?func=subject&id=${id}`);
     }
 
     addSubject(name) {
-        this.http.post('https://studyhelper.cameronmcguffie.com/api/addsubject.php', { name: name }).subscribe({
-            next: data => this.doUpdateSubjects(),
+        this.http.post(`${this.serviceURL}/api.php`, { "func": "add_subject", name: name }).subscribe({
+            next: data => this.getSubjects(),
             error: error => { }
         });
     }
@@ -124,8 +122,8 @@ export class SharedService {
     }
 
     editSubject(id, name) {
-        this.http.post('https://studyhelper.cameronmcguffie.com/api/editsubject.php', { id: id, name: name }).subscribe({
-            next: data => this.doUpdateSubjects(),
+        this.http.post(`${this.serviceURL}/api.php`, { "func": "edit_subject", id: id, name: name }).subscribe({
+            next: data => this.getSubjects(),
             error: error => { }
         });
     }
@@ -138,8 +136,8 @@ export class SharedService {
     }
 
     deleteSubject(id) {
-        this.http.post('https://studyhelper.cameronmcguffie.com/api/delsubject.php', { id: id }).subscribe({
-            next: data => this.doUpdateSubjects(),
+        this.http.post(`${this.serviceURL}/api.php`, { "func": "delete_subject", id: id }).subscribe({
+            next: data => this.getSubjects(),
             error: error => { }
         });
     }

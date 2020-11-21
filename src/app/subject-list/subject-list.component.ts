@@ -15,11 +15,9 @@ export class SubjectListComponent {
         private http: HttpClient,
         private sharedService: SharedService
     ) {
-        sharedService.updateSubjects$.subscribe(
-            update => {
-                if (update == true) {
-                    this.get_subjects();
-                }
+        sharedService.subjectList$.subscribe(
+            data => {
+                this.subjects = data.subjects;
             });
     }
 
@@ -32,13 +30,7 @@ export class SubjectListComponent {
     @Output() add_subject: EventEmitter<boolean> = new EventEmitter<boolean>();
 
     ngOnInit() {
-        this.get_subjects();
-    }
-
-    public get_subjects() {
-        this.http.get<any>('http://studyhelper.cameronmcguffie.com/api/subjects.php').subscribe(data => {
-            this.subjects = data.subjects;
-        });
+        this.sharedService.getSubjects();
     }
 
     public showDelete(id) {
