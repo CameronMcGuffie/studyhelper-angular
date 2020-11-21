@@ -11,7 +11,7 @@
                     Question
                 </div>
                 <div class="popup_form_data">
-                    <textarea [(ngModel)]="question"></textarea>
+                    <textarea [(ngModel)]="this.sharedService.question_data"></textarea>
                 </div>
             </div>
             <div class="popup_form">
@@ -19,7 +19,7 @@
                     Answer
                 </div>
                 <div class="popup_form_data">
-                    <textarea [(ngModel)]="answer"></textarea>
+                    <textarea [(ngModel)]="this.sharedService.answer_data"></textarea>
                 </div>
             </div>
             <div class="popup_options">

@@ -2,8 +2,8 @@
     <div class="popup_background"></div>
     <div class="popup_window">
         <div class="popup_header">
-            <div class="popup_text">Question {{this.question_id + 1}} / {{this.question_count + 1}} | Results {{this.right_answer}} / {{this.wrong_answer}}</div>
-            <div class="popup_close"><i class="fas fa-times" (click)="hideEditQuestion()"></i></div>
+            <div class="popup_text">Question {{this.question_id + 1}} / {{this.sharedService.question_count + 1}} | Results {{this.right_answer}} / {{this.wrong_answer}}</div>
+            <div class="popup_close"><i class="fas fa-times" (click)="hideRunQuestions()"></i></div>
         </div>
         <div class="popup_content">
             <div class="popup_form">

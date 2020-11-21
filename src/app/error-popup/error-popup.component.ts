@@ -9,15 +9,11 @@ import { SharedService } from '../shared.service';
 
 export class ErrorPopupComponent {
     constructor(
-        private sharedService: SharedService
+        public readonly sharedService: SharedService
     ) {
     }
 
-    error_title: string;
-    error_info: string;
-
     ngOnInit() {
-        this.error_title = this.sharedService.error_title;
-        this.error_info = this.sharedService.error_info;
+        
     }
 }

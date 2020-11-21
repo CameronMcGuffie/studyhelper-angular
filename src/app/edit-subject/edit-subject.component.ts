@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Output, Input } from '@angular/core';
+import { Component } from '@angular/core';
 import { SharedService } from '../shared.service';
 
 @Component({
@@ -9,13 +9,8 @@ import { SharedService } from '../shared.service';
 
 export class EditSubjectComponent {
     constructor(
-        private sharedService: SharedService
-    ) {
-        sharedService.subjectName$.subscribe(
-            data => {
-                this.subject_name = data;
-            });
-    }
+        public sharedService: SharedService
+    ) { }
 
     subject_name: string;
 
@@ -24,7 +19,7 @@ export class EditSubjectComponent {
     }
 
     public doEdit() {
-        this.sharedService.editSubject(this.sharedService.subject_id, this.subject_name);
+        this.sharedService.editSubject(this.sharedService.subject_id, this.sharedService.subject_name);
         this.sharedService.setEditSubjectPopup(false);
     }
 

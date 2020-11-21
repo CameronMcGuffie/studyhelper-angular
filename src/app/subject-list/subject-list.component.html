@@ -6,7 +6,7 @@
     <i class="fas fa-plus" (click)="showAddSubject()"></i>
   </div>
 </div>
-<div *ngFor="let subject of subjects">
+<div *ngFor="let subject of this.sharedService.subjects">
   <div class="object">
     <div class="object_header" (click)="goToQuestions(subject.id)">
       {{subject.name}}

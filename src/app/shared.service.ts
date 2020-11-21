@@ -1,8 +1,6 @@
 import { Injectable } from '@angular/core';
-import { Subject } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
 import { Router } from '@angular/router';
-import { formatWithOptions } from 'util';
 
 @Injectable()
 export class SharedService {
@@ -15,35 +13,27 @@ export class SharedService {
 
     serviceURL: string = "https://studyhelper.cameronmcguffie.com/api/api.php";
 
+    subjects: any;
     subject_id: number;
     subject_name: string;
-    question_id: number;
     delete_subject: boolean;
     edit_subject: boolean;
     add_subject: boolean;
 
+    questions: any;
+    question_count: number;
+    question_id: number;
     add_question: boolean;
     delete_question: boolean;
     edit_question: boolean;
     run_questions: boolean;
 
+    question_data: string;
+    answer_data: string;
+
     error: boolean;
     error_title: string;
     error_info: string;
-
-    private subjectList = new Subject<any>();
-    private subjectName = new Subject<string>();
-
-    private updateView = new Subject<boolean>();
-    private questionList = new Subject<any>();
-    private questionData = new Subject<any>();
-
-    subjectList$ = this.subjectList.asObservable();
-    subjectName$ = this.subjectName.asObservable();
-
-    updateView$ = this.updateView.asObservable();
-    questionList$ = this.questionList.asObservable();
-    questionData$ = this.questionData.asObservable();
 
     public ngOnInit() {
         this.subject_id = 0;
@@ -79,37 +69,30 @@ export class SharedService {
 
     setAddSubjectPopup(val) {
         this.add_subject = val;
-        this.updateView.next(true);
     }
 
     setAddQuestionPopup(val) {
         this.add_question = val;
-        this.updateView.next(true);
     }
 
     setDeleteSubjectPopup(val) {
         this.delete_subject = val;
-        this.updateView.next(true);
     }
 
     setDeleteQuestionPopup(val) {
         this.delete_question = val;
-        this.updateView.next(true);
     }
 
     setEditSubjectPopup(val) {
         this.edit_subject = val;
-        this.updateView.next(true);
     }
 
     setEditQuestionPopup(val) {
         this.edit_question = val;
-        this.updateView.next(true);
     }
 
     setRunQuestionsPopup(val) {
         this.run_questions = val;
-        this.updateView.next(true);
     }
 
     doGet(options): any {
@@ -161,26 +144,44 @@ export class SharedService {
     }
 
     getSubjects() {
+        this.subjects = [];
+
         this.doGet({ "func": "subjects" }).then(
-            (data) => { this.subjectList.next(data); }
+            (data) => { 
+                this.subjects = data.subjects || [];
+            }
         );
     }
 
     getQuestions(subject_id) {
+        this.question_count = 0;
+        this.questions = [];
+
         this.doGet({ "func": "questions", "subject_id": subject_id }).then(
-            (data) => { this.questionList.next(data); }
+            (data) => { 
+                this.questions = data.questions || [];
+                this.question_count = (Object.keys(this.questions).length - 1); 
+            }
         );
     }
 
     getSubjectName(id): any {
+        this.subject_name = "";
+
         this.doGet({ "func": "subject", "id": id }).then(
-            (data) => { this.subjectName.next(data.subject.name); }
+            (data) => { this.subject_name = data.subject.name; }
         );
     }
 
     getQuestion(question_id) {
+        this.question_data = "";
+        this.answer_data = "";
+
         this.doGet({ "func": "get_question", "question_id": question_id }).then(
-            (data) => { this.questionData.next(data); }
+            (data) => { 
+                this.question_data = data.question.question;
+                this.answer_data = data.question.answer;
+             }
         );
     }
 

@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Output, Input } from '@angular/core';
+import { Component } from '@angular/core';
 import { SharedService } from '../shared.service';
 
 @Component({
@@ -9,24 +9,16 @@ import { SharedService } from '../shared.service';
 
 export class EditQuestionComponent {
     constructor(
-        private sharedService: SharedService
-    ) {
-        sharedService.questionData$.subscribe(
-            data => {
-                this.question = data.question.question;
-                this.answer = data.question.answer;
-            });
-    }
+        public sharedService: SharedService
+    ) { }
 
-    question: string;
-    answer: any;
 
     ngOnInit() {
         
     }
 
     public doEdit() {
-        this.sharedService.editQuestion(this.sharedService.question_id, this.question, this.answer);
+        this.sharedService.editQuestion(this.sharedService.question_id, this.sharedService.question_data, this.sharedService.answer_data);
         this.sharedService.setEditQuestionPopup(false);
     }
 

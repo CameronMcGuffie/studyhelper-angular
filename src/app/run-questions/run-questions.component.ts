@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Output, Input } from '@angular/core';
+import { Component } from '@angular/core';
 import { SharedService } from '../shared.service';
 
 @Component({
@@ -9,25 +9,13 @@ import { SharedService } from '../shared.service';
 
 export class RunQuestionsComponent {
     constructor(
-        private sharedService: SharedService
-    ) {
-        sharedService.questionList$.subscribe(
-            data => {
-                this.questions = data.questions;
-                if (this.questions) {
-                    this.question = this.questions[this.question_id].question;
-                    this.answer = this.questions[this.question_id].answer;
-                    this.question_count = (Object.keys(this.questions).length - 1);
-                }
-            });
-    }
+        public readonly sharedService: SharedService
+    ) { }
 
-    questions: any;
     question: string;
-    your_answer: string;
     answer: any;
+    your_answer: string;
     question_id: number;
-    question_count: number;
     show_answer: boolean;
     answer_button: string;
     right_answer: number;
@@ -40,7 +28,8 @@ export class RunQuestionsComponent {
         this.show_answer = false;
         this.updateAnswerButton();
 
-        this.sharedService.getQuestions(this.sharedService.subject_id);
+        this.question = this.sharedService.questions[this.question_id].question;
+        this.answer = this.sharedService.questions[this.question_id].answer;
     }
 
     public toggleAnswer() {
@@ -63,8 +52,8 @@ export class RunQuestionsComponent {
 
         if (this.question_id > 0) {
             this.question_id--;
-            this.question = this.questions[this.question_id].question;
-            this.answer = this.questions[this.question_id].answer;
+            this.question = this.sharedService.questions[this.question_id].question;
+            this.answer = this.sharedService.questions[this.question_id].answer;
         }
     }
 
@@ -73,14 +62,14 @@ export class RunQuestionsComponent {
         this.your_answer = "";
         this.updateAnswerButton();
 
-        if (this.question_id < this.question_count) {
+        if (this.question_id < this.sharedService.question_count) {
             this.question_id++;
-            this.question = this.questions[this.question_id].question;
-            this.answer = this.questions[this.question_id].answer;
+            this.question = this.sharedService.questions[this.question_id].question;
+            this.answer = this.sharedService.questions[this.question_id].answer;
         }
     }
 
-    public hideEditQuestion() {
+    public hideRunQuestions() {
         this.sharedService.setRunQuestionsPopup(false);
     }
 

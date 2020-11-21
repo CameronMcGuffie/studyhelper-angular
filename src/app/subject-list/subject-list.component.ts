@@ -1,6 +1,5 @@
-import { Component, EventEmitter, Output } from '@angular/core';
+import { Component } from '@angular/core';
 import { Router } from '@angular/router';
-import { HttpClient } from '@angular/common/http';
 import { SharedService } from '../shared.service';
 
 @Component({
@@ -12,22 +11,10 @@ import { SharedService } from '../shared.service';
 export class SubjectListComponent {
     constructor(
         private router: Router,
-        private http: HttpClient,
-        private sharedService: SharedService
-    ) {
-        sharedService.subjectList$.subscribe(
-            data => {
-                this.subjects = data.subjects;
-            });
-    }
+        public readonly sharedService: SharedService
+    ) { }
 
     public subjects;
-
-    @Output() item_id: EventEmitter<number> = new EventEmitter<number>();
-
-    @Output() delete_subject: EventEmitter<boolean> = new EventEmitter<boolean>();
-    @Output() edit_subject: EventEmitter<boolean> = new EventEmitter<boolean>();
-    @Output() add_subject: EventEmitter<boolean> = new EventEmitter<boolean>();
 
     ngOnInit() {
         this.sharedService.getSubjects();
@@ -48,6 +35,7 @@ export class SubjectListComponent {
     }
 
     goToQuestions(id) {
+        this.sharedService.subject_name = "";
         this.router.navigate(['/questions', id]);
     }
 }

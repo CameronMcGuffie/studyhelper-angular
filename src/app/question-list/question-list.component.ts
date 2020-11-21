@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Output } from '@angular/core';
+import { Component } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { SharedService } from '../shared.service';
 
@@ -11,17 +11,8 @@ import { SharedService } from '../shared.service';
 export class QuestionListComponent {
     constructor(
         private route: ActivatedRoute,
-        private sharedService: SharedService
-    ) {
-        sharedService.questionList$.subscribe(
-            data => {
-                this.questions = data.questions
-            }),
-            sharedService.subjectName$.subscribe(
-                data => {
-                    this.subject_name = data;
-                });
-    }
+        public readonly sharedService: SharedService
+    ) { }
 
     id: number;
     questions: any;
