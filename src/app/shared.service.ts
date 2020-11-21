@@ -27,6 +27,10 @@ export class SharedService {
     edit_question: boolean;
     run_questions: boolean;
 
+    error: boolean;
+    error_title: string;
+    error_info: string;
+
     private subjectList = new Subject<any>();
     private subjectName = new Subject<string>();
 
@@ -53,6 +57,16 @@ export class SharedService {
         this.delete_question = false;
         this.edit_question = false;
         this.run_questions = false;
+
+        this.error = false;
+        this.error_title = "";
+        this.error_info = "";
+    }
+
+    throwError(title, info) {
+        this.error_title = title;
+        this.error_info = info;
+        this.error = true;
     }
 
     setSelectedSubject(id) {
@@ -115,6 +129,8 @@ export class SharedService {
                 error => {
                     if (error.status == 403) {
                         this.router.navigate([`/`], {});
+                    } else if(error.status == 500) {
+                        this.throwError("Server Error", "A server error has occured, please reload and try again.");
                     }
 
                     reject();
@@ -133,6 +149,8 @@ export class SharedService {
                 error => {
                     if (error.status == 403) {
                         this.router.navigate([`/`], {});
+                    } else if(error.status == 500) {
+                        this.throwError("Server Error", "A server error has occured, please reload and try again.");
                     }
 
                     reject();

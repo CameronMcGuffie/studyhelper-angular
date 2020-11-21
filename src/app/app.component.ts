@@ -16,7 +16,7 @@ export class AppComponent {
         if (update == true) {
           this.updateView();
         }
-      });
+      })
   }
 
   title = 'studyhelper';
@@ -32,6 +32,8 @@ export class AppComponent {
   public edit_question;
   public run_questions;
 
+  public error;
+
   public ngOnInit() {
     this.subject_id = 0;
     this.question_id = 0;
@@ -44,6 +46,8 @@ export class AppComponent {
     this.delete_question = false;
     this.edit_question = false;
     this.run_questions = false;
+
+    this.error = false;
   }
 
   updateView() {
@@ -58,5 +62,11 @@ export class AppComponent {
     this.delete_question = this.sharedService.delete_question;
     this.edit_question = this.sharedService.edit_question;
     this.run_questions = this.sharedService.run_questions;
+    
+    this.error = this.sharedService.error;
+  }
+
+  checkError(): boolean {
+    return this.sharedService.error;
   }
 }

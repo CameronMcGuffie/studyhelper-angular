@@ -5,6 +5,7 @@
 <delete-question *ngIf="this.delete_question"></delete-question>
 <edit-question *ngIf="this.edit_question"></edit-question>
 <run-questions *ngIf="this.run_questions"></run-questions>
+<error-popup *ngIf="this.checkError()"></error-popup>
 <div class="container">
   <div class="top">
     <div class="banner">
