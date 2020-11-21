@@ -9,15 +9,18 @@ import { SharedService } from '../shared.service';
 
 export class EditSubjectComponent {
     constructor(
-      private sharedService: SharedService
-    ) { }
+        private sharedService: SharedService
+    ) {
+        sharedService.subjectName$.subscribe(
+            data => {
+                this.subject_name = data;
+            });
+    }
 
     subject_name: string;
 
     ngOnInit() {
-        this.sharedService.getSubjectName(this.sharedService.subject_id).subscribe(data => {
-            this.subject_name = data.subject.name;
-        });
+        this.sharedService.getSubjectName(this.sharedService.subject_id);
     }
 
     public doEdit() {

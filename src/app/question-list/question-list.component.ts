@@ -16,7 +16,11 @@ export class QuestionListComponent {
         sharedService.questionList$.subscribe(
             data => {
                 this.questions = data.questions
-            });
+            }),
+            sharedService.subjectName$.subscribe(
+                data => {
+                    this.subject_name = data;
+                });
     }
 
     id: number;
@@ -30,9 +34,7 @@ export class QuestionListComponent {
 
             this.sharedService.subject_id = this.id;
             this.sharedService.getQuestions(this.id);
-            this.sharedService.getSubjectName(this.id).subscribe(data => {
-                this.subject_name = data.subject.name;
-            });
+            this.sharedService.getSubjectName(this.id);
         });
     }
 

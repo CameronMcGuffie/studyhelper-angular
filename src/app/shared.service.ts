@@ -1,10 +1,12 @@
 import { Injectable } from '@angular/core';
 import { Subject } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
+import { Router } from '@angular/router';
 
 @Injectable()
 export class SharedService {
     constructor(
+        private router: Router,
         private http: HttpClient
     ) {
 
@@ -13,6 +15,7 @@ export class SharedService {
     serviceURL: string = "https://studyhelper.cameronmcguffie.com/api";
 
     subject_id: number;
+    subject_name: string;
     question_id: number;
     delete_subject: boolean;
     edit_subject: boolean;
@@ -24,12 +27,14 @@ export class SharedService {
     run_questions: boolean;
 
     private subjectList = new Subject<any>();
+    private subjectName = new Subject<string>();
 
     private updateView = new Subject<boolean>();
     private questionList = new Subject<any>();
     private questionData = new Subject<any>();
 
     subjectList$ = this.subjectList.asObservable();
+    subjectName$ = this.subjectName.asObservable();
 
     updateView$ = this.updateView.asObservable();
     questionList$ = this.questionList.asObservable();
@@ -37,6 +42,7 @@ export class SharedService {
 
     public ngOnInit() {
         this.subject_id = 0;
+        this.subject_name = "";
         this.delete_subject = false;
         this.edit_subject = false;
         this.add_subject = false;
@@ -91,20 +97,49 @@ export class SharedService {
         this.updateView.next(true);
     }
 
-    getSubjects() {
-        this.http.get(`${this.serviceURL}/api.php?func=subjects`).subscribe(data => {
-            this.subjectList.next(data);
+    doGet(options): any {
+        var promise = new Promise((resolve, reject) => {
+            var params = "";
+
+            Object.entries(options).forEach(([key, value]) => {
+                if (params != "") { params = params + "&"; }
+
+                params += `${key}=${value}`;
+            });
+
+            console.log(`Getting ${this.serviceURL}/api.php?${params}`);
+
+            this.http.get(`${this.serviceURL}/api.php?${params}`).subscribe(data => {
+                resolve(data);
+            },
+                error => {
+                    if (error.status == 403) {
+                        this.router.navigate([`/`], {});
+                    }
+
+                    reject();
+                });
         });
+
+        return promise;
+    }
+
+    getSubjects() {
+        this.doGet({ "func": "subjects" }).then(
+            (data) => { this.subjectList.next(data); }
+        );
     }
 
     getQuestions(subject_id) {
-        this.http.get(`${this.serviceURL}/api.php?func=questions&subject_id=${subject_id}`).subscribe(data => {
-            this.questionList.next(data);
-        });
+        this.doGet({ "func": "questions", "subject_id": subject_id }).then(
+            (data) => { this.questionList.next(data); }
+        );
     }
 
     getSubjectName(id): any {
-        return this.http.get<any>(`${this.serviceURL}/api.php?func=subject&id=${id}`);
+        this.doGet({ "func": "subject", "id": id }).then(
+            (data) => { this.subjectName.next(data.subject.name); }
+        );
     }
 
     addSubject(name) {
@@ -150,8 +185,8 @@ export class SharedService {
     }
 
     getQuestion(question_id) {
-        this.http.get(`${this.serviceURL}/api.php?func=get_question&question_id=${question_id}`).subscribe(data => {
-            this.questionData.next(data);
-        });
+        this.doGet({ "func": "get_question", "question_id": question_id }).then(
+            (data) => { this.questionData.next(data); }
+        );
     }
 }
