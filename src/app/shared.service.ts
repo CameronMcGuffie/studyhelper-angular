@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Router } from '@angular/router';
+import { promise } from 'protractor';
 
 @Injectable()
 export class SharedService {
@@ -112,7 +113,7 @@ export class SharedService {
                 error => {
                     if (error.status == 403) {
                         this.router.navigate([`/`], {});
-                    } else if(error.status == 500) {
+                    } else if (error.status == 500) {
                         this.throwError("Server Error", "A server error has occured, please reload and try again.");
                     }
 
@@ -132,7 +133,7 @@ export class SharedService {
                 error => {
                     if (error.status == 403) {
                         this.router.navigate([`/`], {});
-                    } else if(error.status == 500) {
+                    } else if (error.status == 500) {
                         this.throwError("Server Error", "A server error has occured, please reload and try again.");
                     }
 
@@ -147,7 +148,7 @@ export class SharedService {
         this.subjects = [];
 
         this.doGet({ "func": "subjects" }).then(
-            (data) => { 
+            (data) => {
                 this.subjects = data.subjects || [];
             }
         );
@@ -158,9 +159,9 @@ export class SharedService {
         this.questions = [];
 
         this.doGet({ "func": "questions", "subject_id": subject_id }).then(
-            (data) => { 
+            (data) => {
                 this.questions = data.questions || [];
-                this.question_count = (Object.keys(this.questions).length - 1); 
+                this.question_count = (Object.keys(this.questions).length - 1);
             }
         );
     }
@@ -178,23 +179,43 @@ export class SharedService {
         this.answer_data = "";
 
         this.doGet({ "func": "get_question", "question_id": question_id }).then(
-            (data) => { 
+            (data) => {
                 this.question_data = data.question.question;
                 this.answer_data = data.question.answer;
-             }
+            }
         );
     }
 
-    addSubject(name) {
-        this.doPost({ "func": "add_subject", name: name }).then(
-            (data) => { this.getSubjects(); }
-        );
+    addSubject(name): any {
+        var promise = new Promise((resolve, reject) => {
+            this.doPost({ "func": "add_subject", name: name }).then(
+                () => { 
+                    this.getSubjects();
+                    resolve(); 
+                },
+                (error) => {
+                    reject(error);
+                }
+            );
+        });
+
+        return promise;
     }
 
     addQuestion(question, answer) {
-        this.doPost({ "func": "add_question", "subject_id": this.subject_id, "question": question, "answer": answer }).then(
-            (data) => { this.getQuestions(this.subject_id); }
-        );
+        var promise = new Promise((resolve, reject) => {
+            this.doPost({ "func": "add_question", "subject_id": this.subject_id, "question": question, "answer": answer }).then(
+                () => { 
+                    this.getQuestions(this.subject_id);
+                    resolve(); 
+                },
+                (error) => {
+                    reject(error);
+                }
+            );
+        });
+
+        return promise;
     }
 
     editSubject(id, name) {

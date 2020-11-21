@@ -9,21 +9,28 @@ import { SharedService } from '../shared.service';
 
 export class AddSubjectComponent {
     constructor(
-        private sharedService: SharedService
+        public sharedService: SharedService
     ) { }
 
+    error: string;
     subject_name: string;
 
     ngOnInit() {
-
+        this.error = "";
     }
 
-    public doAddSubject() {
-        this.sharedService.addSubject(this.subject_name);
-        this.sharedService.setAddSubjectPopup(false);
+    doAddSubject() {
+        this.sharedService.addSubject(this.subject_name).then(
+            () => {
+                this.sharedService.setAddSubjectPopup(false);
+            },
+            () => {
+                this.error = "Could not add subject. Check the name and try again.";
+            }
+        );
     }
 
-    public hideAddSubject() {
+    hideAddSubject() {
         this.sharedService.setAddSubjectPopup(false);
     }
 }

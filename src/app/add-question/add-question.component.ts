@@ -12,6 +12,7 @@ export class AddQuestionComponent {
         private sharedService: SharedService
     ) { }
 
+    error: string;
     question: string;
     answer: string;
 
@@ -20,8 +21,14 @@ export class AddQuestionComponent {
     }
 
     public doAddQuestion() {
-        this.sharedService.addQuestion(this.question, this.answer);
-        this.sharedService.setAddQuestionPopup(false);
+        this.sharedService.addQuestion(this.question, this.answer).then(
+            () => {
+                this.sharedService.setAddQuestionPopup(false);
+            },
+            () => {
+                this.error = "Could not add question. Check the details aren't blank and try again.";
+            }
+        );
     }
 
     public hideAddQuestion() {

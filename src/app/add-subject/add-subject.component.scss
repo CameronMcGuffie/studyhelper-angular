@@ -75,7 +75,6 @@
 }
 
 .popup_options {
-    padding-top: 1em;
     display: flex;
     align-items: center;
     justify-content: space-around;
@@ -84,4 +83,15 @@
 
 .popup_text {
     font-size: 2em;
+}
+
+.popup_error {
+    background-color: #FAD3D3;
+    border: 1px solid #790202;
+    color: #4E0005;
+    text-align: center;
+    margin-top: 8pt;
+    padding: 6pt;
+    border-radius: 3pt;
+    width: 100%;
 }
