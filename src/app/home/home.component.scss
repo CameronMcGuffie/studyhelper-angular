@@ -1,0 +1,18 @@
+.object_top {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    padding-bottom: 0.7em;
+    padding-right: 0.2em;
+    font-size: 1.5em;
+}
+
+.object_title {
+    font-weight: bold;
+}
+
+.object_header:hover {
+    cursor: pointer;
+    color: #777777;
+}
