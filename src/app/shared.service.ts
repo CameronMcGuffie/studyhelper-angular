@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { Subject } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
 import { Router } from '@angular/router';
+import { formatWithOptions } from 'util';
 
 @Injectable()
 export class SharedService {
@@ -12,7 +13,7 @@ export class SharedService {
 
     }
 
-    serviceURL: string = "https://studyhelper.cameronmcguffie.com/api";
+    serviceURL: string = "https://studyhelper.cameronmcguffie.com/api/api.php";
 
     subject_id: number;
     subject_name: string;
@@ -107,11 +108,28 @@ export class SharedService {
                 params += `${key}=${value}`;
             });
 
-            console.log(`Getting ${this.serviceURL}/api.php?${params}`);
+            this.http.get(`${this.serviceURL}?${params}`).subscribe(
+                data => {
+                    resolve(data);
+                },
+                error => {
+                    if (error.status == 403) {
+                        this.router.navigate([`/`], {});
+                    }
 
-            this.http.get(`${this.serviceURL}/api.php?${params}`).subscribe(data => {
-                resolve(data);
-            },
+                    reject();
+                });
+        });
+
+        return promise;
+    }
+
+    doPost(options): any {
+        var promise = new Promise((resolve, reject) => {
+            this.http.post(`${this.serviceURL}`, options).subscribe(
+                data => {
+                    resolve(data);
+                },
                 error => {
                     if (error.status == 403) {
                         this.router.navigate([`/`], {});
@@ -142,51 +160,45 @@ export class SharedService {
         );
     }
 
-    addSubject(name) {
-        this.http.post(`${this.serviceURL}/api.php`, { "func": "add_subject", name: name }).subscribe({
-            next: data => this.getSubjects(),
-            error: error => { }
-        });
-    }
-
-    addQuestion(question, answer) {
-        this.http.post(`${this.serviceURL}/api.php`, { "func": "add_question", "subject_id": this.subject_id, "question": question, "answer": answer }).subscribe({
-            next: data => this.getQuestions(this.subject_id),
-            error: error => { }
-        });
-    }
-
-    editSubject(id, name) {
-        this.http.post(`${this.serviceURL}/api.php`, { "func": "edit_subject", id: id, name: name }).subscribe({
-            next: data => this.getSubjects(),
-            error: error => { }
-        });
-    }
-
-    editQuestion(question_id, question, answer) {
-        this.http.post(`${this.serviceURL}/api.php`, { "func": "edit_question", "question_id": question_id, "question": question, "answer": answer }).subscribe({
-            next: data => this.getQuestions(this.subject_id),
-            error: error => { }
-        });
-    }
-
-    deleteSubject(id) {
-        this.http.post(`${this.serviceURL}/api.php`, { "func": "delete_subject", id: id }).subscribe({
-            next: data => this.getSubjects(),
-            error: error => { }
-        });
-    }
-
-    deleteQuestion() {
-        this.http.post(`${this.serviceURL}/api.php`, { "func": "delete_question", "question_id": this.question_id }).subscribe({
-            next: data => this.getQuestions(this.subject_id),
-            error: error => { }
-        });
-    }
-
     getQuestion(question_id) {
         this.doGet({ "func": "get_question", "question_id": question_id }).then(
             (data) => { this.questionData.next(data); }
+        );
+    }
+
+    addSubject(name) {
+        this.doPost({ "func": "add_subject", name: name }).then(
+            (data) => { this.getSubjects(); }
+        );
+    }
+
+    addQuestion(question, answer) {
+        this.doPost({ "func": "add_question", "subject_id": this.subject_id, "question": question, "answer": answer }).then(
+            (data) => { this.getQuestions(this.subject_id); }
+        );
+    }
+
+    editSubject(id, name) {
+        this.doPost({ "func": "edit_subject", id: id, name: name }).then(
+            (data) => { this.getSubjects(); }
+        );
+    }
+
+    editQuestion(question_id, question, answer) {
+        this.doPost({ "func": "edit_question", "question_id": question_id, "question": question, "answer": answer }).then(
+            (data) => { this.getQuestions(this.subject_id); }
+        );
+    }
+
+    deleteSubject(id) {
+        this.doPost({ "func": "delete_subject", id: id }).then(
+            (data) => { this.getSubjects(); }
+        );
+    }
+
+    deleteQuestion() {
+        this.doPost({ "func": "delete_question", "question_id": this.question_id }).then(
+            (data) => { this.getQuestions(this.subject_id); }
         );
     }
 }
